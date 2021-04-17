@@ -1,0 +1,95 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "utterances": [
+        "jarvis",
+        "wake up jarvis",
+        "hello jarvis"
+      ],
+      "response": [
+        "Hello Sir, How may i help you?",
+        "Hello Sir, always at your service"
+      ]
+    },
+    {
+      "tag": "applications",
+      "utterances": [
+        "open",
+        "launch"
+      ],
+      "applications": {
+        "calculator": "/System/Applications/Calculator.app",
+        "chess": "/System/Applications/Chess.app",
+        "chrome": "/Applications/Google\\ Chrome.app",
+        "facebook": "https://facebook.com",
+        "twitter": "https://twitter.com'"
+      },
+      "response": [
+        "Ok sir.",
+        "sure sir."
+      ]
+    },
+    {
+      "tag": "music",
+      "utterances": [
+        "play music",
+        "next song",
+        "stop music"
+      ],
+      "response": [
+        "sure sir."
+      ]
+    },
+    {
+      "tag": "alarm",
+      "utterances": [
+        "set alarm",
+        "wake me up"
+      ],
+      "response": [
+        "sure sir.",
+        "ok sir",
+        "alarm set for you"
+      ]
+    },
+    {
+      "tag": "reminder",
+      "utterances": [
+        "set reminder",
+        "set a reminder",
+        "remind me"
+      ],
+      "response": [
+        "sure sir.",
+        "ok sir",
+        "reminder set for you"
+      ]
+    },
+    {
+      "tag": "google_search",
+      "utterances": [
+        "search",
+        "who is ",
+        "who are ",
+        "what is ",
+        "why "
+      ],
+      "response": [
+        "Got it Sir.",
+        "I got the things for which you are looking for.",
+        "Give me a sec sir."
+      ]
+    },
+    {
+      "tag": "pc_sound",
+      "utterances": [
+        "mute pc sound"
+      ],
+      "response": [
+        "It's done sir.",
+        "ok sir"
+      ]
+    }
+  ]
+}
