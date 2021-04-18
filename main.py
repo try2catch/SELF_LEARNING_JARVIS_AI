@@ -8,13 +8,13 @@ import model
 from model.model_training import TrainingModel
 
 
-def read_voice_cmd(speech):
+def read_voice_cmd(recognizer):
     voice_input = ''
     try:
         with sr.Microphone() as source:
             print('Listening...')
-            audio = speech.listen(source=source, timeout=5, phrase_time_limit=5)
-        voice_input = speech.recognize_google(audio)
+            audio = recognizer.listen(source=source, timeout=5, phrase_time_limit=5)
+        voice_input = recognizer.recognize_google(audio)
         print('Input : {}'.format(voice_input))
     except sr.UnknownValueError:
         pass
@@ -28,7 +28,7 @@ def read_voice_cmd(speech):
     return voice_input.lower()
 
 
-def playsound(response, os_name):
+def play_sound(response, os_name, engine=None):
     if os_name == 'Darwin':
         # This will execute for mac ios.
         os.system(f'say "{response}"')
@@ -44,13 +44,13 @@ if __name__ == '__main__':
     training_model = TrainingModel(words, classes, model.data_x, model.data_y)
     trained_model = training_model.train()
 
-    speech = sr.Recognizer()
+    recognizer = sr.Recognizer()
     engine = pyttsx3.init()
     os_name = platform.uname().system
 
     while True:
-        command = read_voice_cmd(speech)
+        command = read_voice_cmd(recognizer)
         intents = training_model.get_intent(trained_model, command)
         print('Intent : ', intents)
         response = TrainingModel.get_response(intents, model.data)
-        playsound(response, os_name)
+        play_sound(response, os_name)
