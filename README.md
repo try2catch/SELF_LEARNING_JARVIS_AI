@@ -1,7 +1,7 @@
 Hello Friends,
 
 This is the most awaited project of my repo/channel. This #JarvisAI is capable to learn by itself. I have used
-#Sequentional #DeepLearning Model.
+# Sequential #DeepLearning Model.
 
 We are going to make this a bigger project and add the feature time to time.
 
