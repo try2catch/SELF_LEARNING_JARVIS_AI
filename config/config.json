@@ -3,6 +3,7 @@
     {
       "tag": "greeting",
       "utterances": [
+        "hi",
         "jarvis",
         "wake up jarvis",
         "hello jarvis"
