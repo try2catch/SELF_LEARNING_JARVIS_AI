@@ -1,10 +1,12 @@
 import os
-import platform
 
 import pyttsx3
 import speech_recognition as sr
 
+import config
 import model
+import utils
+from intents.application import Applications
 from model.model_training import TrainingModel
 
 
@@ -46,11 +48,18 @@ if __name__ == '__main__':
 
     recognizer = sr.Recognizer()
     engine = pyttsx3.init()
-    os_name = platform.uname().system
-
+    os = config.DEFAULT_OS_NAME
+    session = False
     while True:
         command = read_voice_cmd(recognizer)
-        intents = training_model.get_intent(trained_model, command)
-        print('Intent : ', intents)
-        response = TrainingModel.get_response(intents, model.data)
-        play_sound(response, os_name)
+        if command or command is not '':
+            intent = training_model.get_intent(trained_model, command)
+            response = TrainingModel.get_response(intent, model.data)
+            print(intent, ' : ', response)
+
+            if intent == 'greeting':
+                utils.play_sound(response=response, os_name=os)
+                session = True
+            elif session and intent == 'applications':
+                Applications(response, os).launch(command)
+                session = False

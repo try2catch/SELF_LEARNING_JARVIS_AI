@@ -68,11 +68,8 @@ class TrainingModel:
         y_pred = [[idx, res] for idx, res in enumerate(result) if res > thresh]
         y_pred.sort(key=lambda x: x[1], reverse=True)
 
-        intents = []
-
-        for pred in y_pred:
-            intents.append(self.classes[pred[0]])
-        return intents
+        intent = self.classes[y_pred[0][0]]
+        return intent
 
     def bag_of_words(self, command, words):
         tokens = self.clean_text(command)
@@ -91,8 +88,7 @@ class TrainingModel:
         return tokens
 
     @staticmethod
-    def get_response(intents, data):
-        tag = intents[0]
+    def get_response(tag, data):
         list_of_intents = data['intents']
         for intent in list_of_intents:
             if intent['tag'] == tag:
