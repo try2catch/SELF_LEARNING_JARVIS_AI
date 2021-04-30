@@ -3,8 +3,6 @@
     {
       "tag": "greeting",
       "utterances": [
-        "hi",
-        "jarvis",
         "wake up jarvis",
         "hello jarvis"
       ],
@@ -19,13 +17,6 @@
         "open",
         "launch"
       ],
-      "applications": {
-        "calculator": "/System/Applications/Calculator.app",
-        "chess": "/System/Applications/Chess.app",
-        "chrome": "/Applications/Google\\ Chrome.app",
-        "facebook": "https://facebook.com",
-        "twitter": "https://twitter.com'"
-      },
       "response": [
         "Ok sir.",
         "sure sir."
@@ -80,6 +71,20 @@
         "Got it Sir.",
         "I got the things for which you are looking for.",
         "Give me a sec sir."
+      ]
+    },
+    {
+      "tag": "youtube_search",
+      "utterances": [
+        "play video on youtube",
+        "search video on youtube",
+        "play",
+        "open",
+        "launch"
+      ],
+      "response": [
+        "Got it Sir.",
+        "Give me a second sir."
       ]
     },
     {

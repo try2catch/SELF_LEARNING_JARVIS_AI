@@ -1,14 +1,15 @@
 import re
 import subprocess
 
+import config
 import utils
 
 
 class Applications:
-    def __init__(self, response, os_name, logger=None):
+    def __init__(self, response, logger=None):
         self.logger = logger
         self.response = response
-        self.os_name = os_name
+        self.os_name = config.DEFAULT_OS_NAME
 
     @staticmethod
     def get_name(command):
@@ -27,7 +28,6 @@ class Applications:
         output = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 
         if str(output[1], 'utf-8') is not '':
-            utils.play_sound('I am sorry sir, The app which you are looking for is not installed in my database.',
-                             os_name=self.os_name)
+            utils.play_sound('I am sorry sir, The app which you are looking for is not installed in my database.')
         else:
-            utils.play_sound(response=self.response, os_name=self.os_name)
+            utils.play_sound(response=self.response)

@@ -4,3 +4,4 @@ SpeechRecognition
 numpy
 nltk
 tensorflow
+google-api-python-client

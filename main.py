@@ -7,6 +7,7 @@ import config
 import model
 import utils
 from intents.application import Applications
+from intents.youtube_search import YoutubeSearch
 from model.model_training import TrainingModel
 
 
@@ -54,12 +55,15 @@ if __name__ == '__main__':
         command = read_voice_cmd(recognizer)
         if command or command is not '':
             intent = training_model.get_intent(trained_model, command)
-            response = TrainingModel.get_response(intent, model.data)
+            response = TrainingModel.get_response(intent, config.DATA)
             print(intent, ' : ', response)
 
             if intent == 'greeting':
-                utils.play_sound(response=response, os_name=os)
+                utils.play_sound(response=response)
                 session = True
             elif session and intent == 'applications':
-                Applications(response, os).launch(command)
+                Applications(response).launch(command)
+                session = False
+            elif session and intent == 'youtube_search':
+                YoutubeSearch(command, response).launch()
                 session = False

@@ -1,5 +1,3 @@
-import json
-
 import nltk
 
 # Downloading the nltk data
@@ -12,16 +10,15 @@ import nltk
 #
 # nltk.download('punkt')
 # nltk.download('wordnet')
-
-with open('config/config.json') as file:
-    data = json.load(file)
+# nltk.download('vader_lexicon')
+import config
 
 words = []
 classes = []
 data_x = []
 data_y = []
 
-for intent in data['intents']:
+for intent in config.DATA['intents']:
     for utterance in intent['utterances']:
         tokens = nltk.word_tokenize(utterance)
         words.extend(tokens)

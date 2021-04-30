@@ -1,7 +1,10 @@
 import os
 import random
+import webbrowser
 
 import pyttsx3
+
+import config
 
 engine = pyttsx3.init()
 
@@ -29,9 +32,14 @@ def choose_random(response):
     return random.choice(response)
 
 
-def play_sound(response, os_name):
+def play_sound(response):
+    os_name = config.DEFAULT_OS_NAME
     if os_name == 'Darwin':
         os.system('say "{}"'.format(response))
     else:
         engine.say(response)
         engine.runAndWait()
+
+
+def open(url):
+    webbrowser.open(url)
