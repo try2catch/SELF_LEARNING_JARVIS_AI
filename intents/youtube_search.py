@@ -23,9 +23,9 @@ class YoutubeSearch:
         'search friday in python on youtube'
         intents = config.DATA['intents']
         utterances = [intent['utterances'] for intent in intents if intent['tag'] == 'youtube_search'][0]
-        words = set([word for utterance in utterances for word in utterance.split(' ')])
+        words = set(['\\b' + word + '\\b' for utterance in utterances for word in utterance.split(' ')])
         words = '|'.join(words)
-        return re.sub(words, '', self.command).strip()
+        return re.sub(words, '', self.command, flags=re.IGNORECASE).strip()
 
     def search(self):
         try:
