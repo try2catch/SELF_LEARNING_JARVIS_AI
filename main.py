@@ -50,7 +50,7 @@ if __name__ == '__main__':
     recognizer = sr.Recognizer()
     engine = pyttsx3.init()
     os = config.DEFAULT_OS_NAME
-    session = False
+    session = True
     while True:
         command = read_voice_cmd(recognizer)
         if command or command is not '':
@@ -59,11 +59,11 @@ if __name__ == '__main__':
             print(intent, ' : ', response)
 
             if intent == 'greeting':
-                utils.play_sound(response=response)
+                utils.speak(response=response)
                 session = True
             elif session and intent == 'applications':
                 Applications(response).launch(command)
-                session = False
+                # session = False
             elif session and intent == 'youtube_search':
                 YoutubeSearch(command, response).launch()
                 session = False

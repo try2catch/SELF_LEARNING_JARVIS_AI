@@ -1,4 +1,5 @@
 import nltk
+import ssl
 
 # Downloading the nltk data
 # try:

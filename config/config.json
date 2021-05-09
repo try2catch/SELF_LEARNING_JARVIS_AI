@@ -15,7 +15,9 @@
       "tag": "applications",
       "utterances": [
         "open",
-        "launch"
+        "launch",
+        "app",
+        "application"
       ],
       "response": [
         "Ok sir.",

@@ -48,17 +48,20 @@ class YoutubeSearch:
             max_key = max(sentiments, key=sentiments.get)
             if max_key == 'neu' or max_key == 'pos':
                 utils.open(url)
-                utils.play_sound(self.response)
+                utils.speak(self.response)
 
     def launch(self):
-        result = self.search()[0]
+        try:
+            result = self.search()[0]
+        except Exception as e:
+            print(e)
         title = html.unescape(result['snippet']['title'])
 
         if result['id']['kind'] == 'youtube#video':
-            utils.play_sound(f'I have found the video as {title}. Would you like to play it?')
+            utils.speak(f'I have found the video as {title}. Would you like to play it?')
             url = f"https://youtu.be/{result['id']['videoId']}"
         elif result['id']['kind'] == 'youtube#channel':
-            utils.play_sound(f'I got a channel for you as {title}. Would you like to open it?')
+            utils.speak(f'I got a channel for you as {title}. Would you like to open it?')
             url = f"https://www.youtube.com/channel/{result['id']['channelId']}"
 
         self.open(url)
