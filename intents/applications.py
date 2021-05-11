@@ -1,14 +1,15 @@
+import os
 import re
 import subprocess
 
 import config
 import utils
-
-from intents.windows.win_applications import WinApplications
+from intents import windows
 
 
 class Applications:
     INTENT_NAME = 'applications'
+    APP_INSTALLATION_DIRECTORIES = ['/System/Applications', '/Applications', '/System/Applications/Utilities']
 
     def __init__(self, response, logger=None):
         self.logger = logger
@@ -26,20 +27,28 @@ class Applications:
 
     def launch(self, command):
         app = self.get_name(command)
-        if self.os_name == 'Darwin':
-            cmd = f"open /Applications/{app}.app"
-            self.execute_command(cmd)
-        else:
-            winapp = WinApplications(app)
 
-            path = winapp.get_path_from_file()
+        if self.os_name == 'Darwin':
+            path = utils.get_path_from_file(app)
             if path is None:
-                paths = winapp.get_path()
-                if len(paths) > 1:
-                    path = WinApplications.get_multiple_paths(paths)
-                else:
-                    path = paths[0]
-                WinApplications.add_to_json({app: {'path': path}})
+                patterns = [f'*{app}.app', f'{app}*.app', f'*{app}.app', f'*{app}*.app']
+                for directory in self.APP_INSTALLATION_DIRECTORIES:
+                    if path:
+                        break
+                    for pattern in patterns:
+                        path = os.popen(f"find {directory} -iname '{pattern}'").read() \
+                            .split('\n')[0].replace(" ", "\\ ")
+                        if path:
+                            break
+
+            cmd = f'open {path}'
+            self.execute_command(cmd)
+            utils.add_to_json({app: {'path': path}})
+        else:
+            path = utils.get_path_from_file()
+            if path is None:
+                path = utils.get_path(app, windows.EXECUTABLE_EXT, windows.APP_INSTALLATION_DIRECTORIES)[0]
+                utils.add_to_json({app: {'path': path}})
             if path:
                 cmd = f'explorer "{path}"'
                 print('Application : ', cmd)

@@ -1,12 +1,9 @@
-import os
-
-import pyttsx3
 import speech_recognition as sr
 
 import config
 import model
 import utils
-from intents.application import Applications
+from intents.applications import Applications
 from intents.youtube_search import YoutubeSearch
 from model.model_training import TrainingModel
 
@@ -31,15 +28,6 @@ def read_voice_cmd(recognizer):
     return voice_input.lower()
 
 
-def play_sound(response, os_name, engine=None):
-    if os_name == 'Darwin':
-        # This will execute for mac ios.
-        os.system(f'say "{response}"')
-    else:
-        engine.say(response)
-        engine.runAndWait()
-
-
 if __name__ == '__main__':
     words = model.words
     classes = model.classes
@@ -48,7 +36,6 @@ if __name__ == '__main__':
     trained_model = training_model.train()
 
     recognizer = sr.Recognizer()
-    engine = pyttsx3.init()
     os = config.DEFAULT_OS_NAME
     session = True
     while True:

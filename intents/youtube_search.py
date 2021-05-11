@@ -1,5 +1,4 @@
 import html
-import re
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -14,24 +13,18 @@ class YoutubeSearch:
     YOUTUBE_API_SERVICE_NAME = 'youtube'
     YOUTUBE_VERSION = 'v3'
 
+    INTENT_NAME = 'youtube_search'
+
     def __init__(self, command, response):
         self.command = command
         self.response = response
         self.os = config.DEFAULT_OS_NAME
 
-    def get_search_value(self):
-        'search friday in python on youtube'
-        intents = config.DATA['intents']
-        utterances = [intent['utterances'] for intent in intents if intent['tag'] == 'youtube_search'][0]
-        words = set(['\\b' + word + '\\b' for utterance in utterances for word in utterance.split(' ')])
-        words = '|'.join(words)
-        return re.sub(words, '', self.command, flags=re.IGNORECASE).strip()
-
     def search(self):
         try:
             youtube = build(self.YOUTUBE_API_SERVICE_NAME, self.YOUTUBE_VERSION, developerKey=self.DEVELOPER_KEY)
 
-            search = self.get_search_value()
+            search = utils.get_search_value(self.command, self.INTENT_NAME)
             search_response = youtube.search().list(
                 q=search,
                 part='id, snippet',
@@ -47,8 +40,8 @@ class YoutubeSearch:
         if sentiments:
             max_key = max(sentiments, key=sentiments.get)
             if max_key == 'neu' or max_key == 'pos':
-                utils.open(url)
                 utils.speak(self.response)
+                utils.open_url(url)
 
     def launch(self):
         try:
