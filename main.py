@@ -24,7 +24,6 @@ def read_voice_cmd(recognizer):
         pass
     except TimeoutError:
         pass
-
     return voice_input.lower()
 
 
