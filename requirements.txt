@@ -1,7 +1,10 @@
-pyttsx3
+pyttsx3~=2.90
 pyaudio
 SpeechRecognition
-numpy
-nltk
-tensorflow
+numpy~=1.19.2
+nltk~=3.5
+tensorflow~=2.4.1
 google-api-python-client
+dateparser~=0.7.6
+googletrans~=3.0.0
+gTTS~=2.2.2
