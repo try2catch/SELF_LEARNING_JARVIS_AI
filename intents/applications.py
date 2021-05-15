@@ -17,7 +17,7 @@ class Applications:
         self.os_name = config.DEFAULT_OS_NAME
 
     def get_name(self, command):
-        app = utils.get_search_value(command, intent_name=self.INTENT_NAME)
+        app = utils.get_search_value(command, intent_name=Applications.INTENT_NAME)
 
         is_space = bool(re.search(r"\s", app))
         if is_space:
@@ -32,7 +32,7 @@ class Applications:
             path = utils.get_path_from_file(app)
             if path is None:
                 patterns = [f'*{app}.app', f'{app}*.app', f'*{app}.app', f'*{app}*.app']
-                for directory in self.APP_INSTALLATION_DIRECTORIES:
+                for directory in Applications.APP_INSTALLATION_DIRECTORIES:
                     if path:
                         break
                     for pattern in patterns:

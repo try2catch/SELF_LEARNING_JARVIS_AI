@@ -3,6 +3,7 @@ import speech_recognition as sr
 import config
 import model
 import utils
+from intents.alarm import Alarm
 from intents.applications import Applications
 from intents.youtube_search import YoutubeSearch
 from model.model_training import TrainingModel
@@ -24,7 +25,9 @@ def read_voice_cmd(recognizer):
         pass
     except TimeoutError:
         pass
+
     return voice_input.lower()
+
 
 
 if __name__ == '__main__':
@@ -36,7 +39,7 @@ if __name__ == '__main__':
 
     recognizer = sr.Recognizer()
     os = config.DEFAULT_OS_NAME
-    session = True
+    session = False
     while True:
         command = read_voice_cmd(recognizer)
         if command or command is not '':
@@ -47,9 +50,15 @@ if __name__ == '__main__':
             if intent == 'greeting':
                 utils.speak(response=response)
                 session = True
+                continue
             elif session and intent == 'applications':
                 Applications(response).launch(command)
-                # session = False
+                session = False
+                continue
             elif session and intent == 'youtube_search':
                 YoutubeSearch(command, response).launch()
                 session = False
+                continue
+            elif intent == 'alarm':
+                Alarm(command, response).start()
+                continue
