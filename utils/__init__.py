@@ -61,10 +61,11 @@ def get_path(app, ext, directories):
     for directory in directories:
         for pattern in patterns:
             result = find_file(pattern, directory)
-            if len(result):
-                return get_multiple_paths(result)
-            else:
-                return result
+            if result:
+                if len(result):
+                    return get_multiple_paths(result, ext)
+                else:
+                    return result
 
 
 def get_multiple_paths(paths, ext):
