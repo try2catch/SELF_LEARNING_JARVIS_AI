@@ -14,7 +14,7 @@ if __name__ == '__main__':
     trained_model = training_model.train()
 
     os = config.DEFAULT_OS_NAME
-    session = True
+    session = False
     while True:
         command = utils.read_voice_cmd()
         if command or command is not '':
@@ -28,12 +28,12 @@ if __name__ == '__main__':
                 continue
             elif session and intent == 'applications':
                 Applications(response).launch(command)
-                # session = False
-                # continue
+                session = False
+                continue
             elif session and intent == 'youtube_search':
                 YoutubeSearch(command, response).launch()
-                # session = False
-                # continue
+                session = False
+                continue
             elif intent == 'alarm':
                 Alarm(command, response).start()
                 continue
