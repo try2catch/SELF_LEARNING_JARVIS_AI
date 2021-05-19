@@ -47,7 +47,7 @@ class Applications:
         else:
             path = utils.get_path_from_file(app)
             if path is None:
-                path = utils.get_path(app, windows.EXECUTABLE_EXT, windows.APP_INSTALLATION_DIRECTORIES)[0]
+                path = utils.get_path(app, windows.EXECUTABLE_EXT, windows.APP_INSTALLATION_DIRECTORIES)
                 utils.add_to_json({app: {'path': path}})
             if path:
                 cmd = f'explorer "{path}"'
