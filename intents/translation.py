@@ -21,7 +21,7 @@ class Translation:
     "how to speak my name is Akhilesh in Hindi"
 
     def get_text_and_target(self):
-        text = utils.get_search_value(self.input, intent_name=Translation.INTENT_NAME)
+        text = utils.get_search_value(self.input, intent_name=Translation.INTENT_NAME, match_flag='sentence')
         last_char_index = re.search(r'\bin\b|\bto\b', text)
         if last_char_index:
             target = text[last_char_index.regs[0][1] + 1:]

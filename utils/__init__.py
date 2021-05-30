@@ -6,12 +6,10 @@ import re
 import webbrowser
 
 import pyttsx3
+import speech_recognition as sr
 
 import config
 from model.voice_analyzer import VoiceAnalyzer
-import speech_recognition as sr
-
-
 
 
 def choose_random(response):
@@ -42,11 +40,16 @@ def find_file(pattern, path):
             return paths
 
 
-def get_search_value(command, intent_name):
+def get_search_value(command, intent_name, match_flag='word'):
     intents = config.DATA['intents']
+
     utterances = [intent['utterances'] for intent in intents if intent['tag'] == intent_name][0]
-    words = ['\\b' + word + '\\b' for utterance in utterances for word in utterance.split(' ')]
-    words = '|'.join(words)
+    if match_flag == 'word':
+        words = ['\\b' + word + '\\b' for utterance in utterances for word in utterance.split(' ')]
+        words = '|'.join(words)
+    elif match_flag == 'sentence':
+        words = '|'.join(utterances)
+
     return re.sub(words, '', command, flags=re.IGNORECASE).strip()
 
 
