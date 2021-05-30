@@ -9,6 +9,9 @@ import pyttsx3
 
 import config
 from model.voice_analyzer import VoiceAnalyzer
+import speech_recognition as sr
+
+
 
 
 def choose_random(response):
@@ -57,14 +60,15 @@ def get_path_from_file(app):
 
 
 def get_path(app, ext, directories):
-    patterns = [f'{app}*{ext}', f'{app}*.{ext}', f'*{app}.{ext}', f'*{app}*.{ext}']
+    patterns = [f'{app}{ext}', f'{app}*.{ext}', f'*{app}.{ext}', f'*{app}*.{ext}']
     for directory in directories:
         for pattern in patterns:
             result = find_file(pattern, directory)
-            if len(result):
-                return get_multiple_paths(result)
-            else:
-                return result
+            if result:
+                if len(result):
+                    return get_multiple_paths(result, ext)
+                else:
+                    return result
 
 
 def get_multiple_paths(paths, ext):
@@ -72,7 +76,7 @@ def get_multiple_paths(paths, ext):
     for path in paths:
         exe_name = os.path.basename(path).replace(ext, '')
         speak(exe_name)
-        sentiments = VoiceAnalyzer().recognize()
+        sentiments = VoiceAnalyzer().get_polarity_scores()
         if sentiments:
             max_key = max(sentiments, key=sentiments.get)
             if max_key == 'neu' or max_key == 'pos':
@@ -85,3 +89,24 @@ def add_to_json(app_details):
         data.update(app_details)
         file.seek(0)
         json.dump(data, file)
+
+
+def read_voice_cmd():
+    recognizer = sr.Recognizer()
+    voice_input = ''
+    try:
+        with sr.Microphone() as source:
+            print('Listening...')
+            audio = recognizer.listen(source=source, timeout=5, phrase_time_limit=5)
+        voice_input = recognizer.recognize_google(audio)
+        print('Input : {}'.format(voice_input))
+    except sr.UnknownValueError:
+        pass
+    except sr.RequestError:
+        print('Network error.')
+    except sr.WaitTimeoutError:
+        pass
+    except TimeoutError:
+        pass
+
+    return voice_input.lower()
