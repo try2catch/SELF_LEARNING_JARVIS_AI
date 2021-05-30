@@ -16,7 +16,7 @@ def choose_random(response):
 
 
 def speak(response):
-    os_name = config.DEFAULT_OS_NAME
+    os_name = config.OS_NAME
     if os_name == 'Darwin':
         os.system('say "{}"'.format(response))
     else:

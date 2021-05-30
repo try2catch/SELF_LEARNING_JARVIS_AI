@@ -15,7 +15,7 @@ class YoutubeSearch:
     def __init__(self, command, response):
         self.command = command
         self.response = response
-        self.os = config.DEFAULT_OS_NAME
+        self.os = config.OS_NAME
 
     def search(self):
         try:

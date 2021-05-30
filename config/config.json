@@ -64,6 +64,15 @@
         "Got it Sir.",
         "Give me a second sir."
       ]
+    },
+    {
+      "tag": "translate",
+      "utterances": [
+        "translate",
+        "how to speak"
+      ],
+      "response": [
+      ]
     }
   ]
 }

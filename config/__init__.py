@@ -1,8 +1,8 @@
 import json
-import platform
 import os
+import platform
 
-DEFAULT_OS_NAME = platform.uname().system
+OS_NAME = platform.uname().system
 APP_DETAILS_FILE = 'config/applications.json'
 
 with open('config/config.json') as file:

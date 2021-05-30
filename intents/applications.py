@@ -14,7 +14,7 @@ class Applications:
     def __init__(self, response, logger=None):
         self.logger = logger
         self.response = response
-        self.os_name = config.DEFAULT_OS_NAME
+        self.os_name = config.OS_NAME
 
     def get_name(self, command):
         app = utils.get_search_value(command, intent_name=Applications.INTENT_NAME)

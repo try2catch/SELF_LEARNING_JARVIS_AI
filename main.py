@@ -5,6 +5,7 @@ import model
 import utils
 from intents.alarm import Alarm
 from intents.applications import Applications
+from intents.translation import Translation
 from intents.youtube_search import YoutubeSearch
 from model.model_training import TrainingModel
 
@@ -29,7 +30,6 @@ def read_voice_cmd(recognizer):
     return voice_input.lower()
 
 
-
 if __name__ == '__main__':
     words = model.words
     classes = model.classes
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     trained_model = training_model.train()
 
     recognizer = sr.Recognizer()
-    os = config.DEFAULT_OS_NAME
+    os = config.OS_NAME
     session = False
     while True:
         command = read_voice_cmd(recognizer)
@@ -50,15 +50,13 @@ if __name__ == '__main__':
             if intent == 'greeting':
                 utils.speak(response=response)
                 session = True
-                continue
             elif session and intent == 'applications':
                 Applications(response).launch(command)
                 session = False
-                continue
             elif session and intent == 'youtube_search':
                 YoutubeSearch(command, response).launch()
                 session = False
-                continue
             elif intent == 'alarm':
                 Alarm(command, response).start()
-                continue
+            elif intent == 'translate':
+                Translation(command).translate()
