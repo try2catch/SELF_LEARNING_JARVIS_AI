@@ -1,13 +1,11 @@
 import os
 import re
-import time
 
 import speech_recognition as sr
 from googletrans import Translator, constants
 from gtts import gTTS
 from playsound import playsound
 
-import config
 import utils
 
 
@@ -42,11 +40,7 @@ class Translation:
                 speak.save(Translation.MP3_NAME)
 
                 try:
-                    if config.OS_NAME == 'Darwin':
-                        os.system(f'open {Translation.MP3_NAME}')
-                        time.sleep(5)
-                    else:
-                        playsound(Translation.MP3_NAME)
+                    playsound(Translation.MP3_NAME)
                     os.remove(Translation.MP3_NAME)
                 except IOError:
                     pass
