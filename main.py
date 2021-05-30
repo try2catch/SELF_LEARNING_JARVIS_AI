@@ -5,7 +5,7 @@ import model
 import utils
 from intents.alarm import Alarm
 from intents.applications import Applications
-from intents.translate import Translate
+from intents.translate import Translation
 from intents.youtube_search import YoutubeSearch
 from model.model_training import TrainingModel
 
@@ -61,4 +61,4 @@ if __name__ == '__main__':
                 Alarm(command, response).start()
                 session = False
             elif intent == 'translate':
-                Translate(command, response).translate()
+                Translation(command, response).translate()

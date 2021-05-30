@@ -90,3 +90,12 @@ def add_to_json(app_details):
         data.update(app_details)
         file.seek(0)
         json.dump(data, file)
+
+
+def match(string, regex):
+    compiled = re.compile(regex, flags=re.IGNORECASE)
+    result = compiled.search(string)
+    if result:
+        return result.group()
+    else:
+        return ''
